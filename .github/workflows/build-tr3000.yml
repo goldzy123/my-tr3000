@@ -5,16 +5,16 @@ on:
     tags:
       - "v*.*.*"
   workflow_dispatch:  # Allows manual triggering
-#  watch:
-#    types: [started]  # Triggers when someone stars the repo
+  watch:
+    types: [started]  # Triggers when someone stars the repo
 
 jobs:
   build:
     name: build openwrt for tr3000
     runs-on: ubuntu-latest
     
-    # Skip build for star events if it's not from the repo owner
-    if: github.event_name != 'watch' || github.event.sender.login == github.repository_owner
+    # Removed owner restriction - now any star will trigger the build
+    # if: github.event_name != 'watch' || github.event.sender.login == github.repository_owner
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
