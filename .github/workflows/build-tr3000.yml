@@ -50,9 +50,10 @@ jobs:
           if [ -f .config ]; then
             cp .config openwrt/
           fi
-      - name: SSH connection to Actions
-        uses: P3TERX/debugger-action@master
-        if: env.SSH_ACTIONS == 'true' 
+
+      - uses: actions/checkout@v2
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
         
    #   - name: Run menuconfig (interactive for manual runs)
    #     if: github.event_name == 'workflow_dispatch'
