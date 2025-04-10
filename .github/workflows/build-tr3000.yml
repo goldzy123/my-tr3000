@@ -83,7 +83,7 @@ jobs:
           args: zip -qq -r openwrt-tr3000.zip openwrt/bin
 
       - name: Release and Upload (only for tag events)
-        if: startsWith(github.ref, 'refs/tags/')
+        #if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -98,7 +98,7 @@ jobs:
           keep_minimum_runs: 3
 
       - name: Remove old Releases
-        if: success() && startsWith(github.ref, 'refs/tags/')
+        if: success()
         uses: dev-drprasad/delete-older-releases@master
         with:
           keep_latest: 10
