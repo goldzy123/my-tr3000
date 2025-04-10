@@ -19,14 +19,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          
       - name: Install dependencies
         env:
           DEBIAN_FRONTEND: noninteractive
+          SSH_ACTIONS: 'true'
         run: |
           sudo -E apt update
           sudo -E apt install -y build-essential clang flex bison g++ gawk \
@@ -54,13 +50,16 @@ jobs:
           if [ -f .config ]; then
             cp .config openwrt/
           fi
+      - name: SSH connection to Actions
+        uses: P3TERX/debugger-action@master
+        if: env.SSH_ACTIONS == 'true' 
         
-      - name: Run menuconfig (interactive for manual runs)
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          cd openwrt
-          make menuconfig
-          make defconfig
+   #   - name: Run menuconfig (interactive for manual runs)
+   #     if: github.event_name == 'workflow_dispatch'
+   #     run: |
+    #      cd openwrt
+      #    make menuconfig
+         # make defconfig
           
       - name: make download
         env:
