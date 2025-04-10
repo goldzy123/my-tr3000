@@ -51,7 +51,7 @@ jobs:
             cp .config openwrt/
           fi
 
-      - uses: actions/checkout@v4
+    #  - uses: actions/checkout@v4
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
         
